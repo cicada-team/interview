@@ -1,0 +1,13 @@
+{
+  "name": "interview",
+  "author": "yhtml5 <1417376255@qq.com>",
+  "version": "0.2.2",
+  "main": "apps/",
+  "license": "MIT",
+  "scripts": {
+    "app1": "clear && node ./apps/tournament.js",
+    "pregit": "clear && git status",
+    "git": "git add -A && git commit -m 'auto commit' && git pull && git push",
+    "postgit": "clear && git status"
+  }
+}
