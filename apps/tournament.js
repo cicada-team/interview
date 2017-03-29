@@ -30,30 +30,11 @@ function calculating() {
   let info = mapInputToObject(input)
   info.forEach((value) => {
     if (value[2] === 'win') {
-      let team1 = searchTeams(value[0])
-      team1.mp += 1
-      team1.w += 1
-      team1.p += 3
-      let team2 = searchTeams(value[1])
-      team2.mp += 1
-      team2.l += 1
+      updateTeams(searchTeams(value[0]), searchTeams(value[1]), 'w')
     } else if (value[2] === 'loss') {
-      let team1 = searchTeams(value[1])
-      team1.mp += 1
-      team1.w += 1
-      team1.p += 3
-      let team2 = searchTeams(value[0])
-      team2.mp += 1
-      team2.l += 1
+      updateTeams(searchTeams(value[0]), searchTeams(value[1]), 'l')
     } else if (value[2] === 'draw') {
-      let team1 = searchTeams(value[0])
-      team1.mp += 1
-      team1.d += 1
-      team1.p += 1
-      let team2 = searchTeams(value[1])
-      team2.mp += 1
-      team2.d += 1
-      team2.p += 1
+      updateTeams(searchTeams(value[0]), searchTeams(value[1]), 'd')
     } else {
       console.error('please check!')
     }
@@ -61,20 +42,32 @@ function calculating() {
   // console.log(info)
 }
 
-function updateTeams(team) {
-  // let team = searchTeams()
-  // team.mp += 1
-  // team.w += 1
-  // team.p += 3
+function updateTeams(team1, team2, status) {
+  team1.mp += 1
+  team2.mp += 1
+  if (status === 'w') {
+    team1.w += 1
+    team2.l += 1
+    team1.p += 3
+  } else if (status === 'l') {
+    team2.w += 1
+    team1.l += 1
+    team2.p += 3
+  } else {
+    team1.d += 1
+    team2.d += 1
+    team1.p += 1
+    team2.p += 1
+  }
 }
 
 calculating()
 
-console.log('\n      Team    | MP |  W |  D |  L |  P')
+console.log('\n  Team                    | MP| W | D | L | P')
 function output() {
   teams.map((value, index) => {
-    let space = ['', '', '', '', '']
-    console.log('  ' + value.name + space[index], '|' + value.mp, '|' + value.w, '|' + value.d, '|' + value.l, '|' + value.p)
+    let space = ['    ', '     ', '     ', '']
+    console.log('  ' + value.name + space[index], '| ' + value.mp, '| ' + value.w, '| ' + value.d, '| ' + value.l, '| ' + value.p)
   })
 }
 output()
