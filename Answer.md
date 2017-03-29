@@ -2,7 +2,7 @@
 
 ### Tournament
 
-The code is in `apps/tournament.js`
+The source code is in `apps/tournament.js`
 
 > npm run app1
 
