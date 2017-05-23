@@ -74,6 +74,84 @@ All other lines should be ignored:
 If an input contains both valid and invalid input lines,
 output a table that contains just the results from the valid lines.
 
+### Answer:
+
+#### Class:
+
+```javascript
+class Matches {
+	
+	constructor() {
+		this.teams = {}
+	}
+
+	static initTeam(team) {
+		team = team || {}
+		team.mp = team.mp || 0 // 场次
+		team.w = team.w || 0 // win
+		team.d = team.d || 0 // draw
+		team.l = team.l || 0 // loss
+		team.p = team.p || 0 // points
+		return team
+	}
+
+	add(desc) {
+		const [a, b, type] = desc.split(';')
+		this.teams[a] = Matches.initTeam(this.teams[a])
+		this.teams[b] = Matches.initTeam(this.teams[b])
+		this.teams[a]['mp'] ++
+		this.teams[b]['mp'] ++
+		switch(type) {
+			case 'win':
+				this.teams[a]['w'] ++
+				this.teams[b]['l'] ++
+				this.teams[a]['p'] = this.teams[a]['p'] + 3
+						break
+			case 'loss':
+				this.teams[b]['w'] ++
+				this.teams[a]['l'] ++
+				this.teams[b]['p'] = this.teams[b]['p'] + 3
+						break
+			case 'draw':
+				this.teams[a]['d'] ++
+				this.teams[b]['d'] ++
+				this.teams[a]['p'] ++
+				this.teams[b]['p'] ++
+						break
+				default:
+					break;
+		}
+	}
+
+	adds(descs) {
+		descs.split('\n').forEach(desc => {
+			this.add(desc)
+		})
+	}
+
+	get info() {
+		return this.result
+	}
+}
+```
+
+#### Use:
+
+```javascript
+const matches = new Matches()
+
+console.log(matches)
+
+matches.adds(`Allegoric Alaskans;Blithering Badgers;win
+Devastating Donkeys;Courageous Californians;draw
+Devastating Donkeys;Allegoric Alaskans;win
+Courageous Californians;Blithering Badgers;loss
+Blithering Badgers;Devastating Donkeys;loss
+Allegoric Alaskans;Courageous Californians;win`)
+
+console.log(matches.teams)
+```
+
 # 2 Ordered Link List
 
 根据输入的数组中每项的 before/after/first/last 规则，输出一个新排好序的数组或者链表。要求，多解的情况可以只求一解，如果无解要求程序能检测出来。
@@ -127,3 +205,5 @@ Some test cases may use duplicate stones in a chain solution, assume that multip
 
 Input example:
 (1, 2), (5, 3), (3, 1), (1, 2), (2, 4), (1, 6), (2, 3), (3, 4), (5, 6)
+
+贪心算法
