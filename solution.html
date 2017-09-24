@@ -1,4 +1,4 @@
-<script type="text/javascript">
+/**********************Q2********************/
 var test = [
 {id: 1},
 {id: 2, before: 1},
@@ -18,7 +18,7 @@ var test = [
 function hasSpecialPro(obj){
   return (obj['before'] || obj['after']);
 }
-function solution(input) {
+function orderLinkList(input) {
   var arrResult = [];
   var arrSpecial = [];
   var header = '';
@@ -77,6 +77,30 @@ function solution(input) {
 
   return arrResult;
 }
-console.log(solution(test))
-</script>
-<body></body>
+console.log(orderLinkList(test))
+
+/*********************Q3******************/
+function createTree(input){
+/*
+1. 遍历数组中的对象，若该对象无属性parentId，则认为该对象是root
+2. 新建组数arrTree和arrRemian
+3. 若对象有属性parentId，遍历arrTree，找到父元素则指定关系
+  3.1 若暂时无法找到指定父元素，遍历arrRemain，在arrReamin中找到指定元素则指定关系
+  3.2 若arrRemain中也不存在，将该节点置于arrRemain作为一个单独的元素  
+4. 合并arrRemain和arrTree，若无法将arrRemain中的全部元素合并置arrTree，则报错
+*/
+  var arrTree = [];
+  var arrRemain = [];
+   for(var i = 0 ; i < input.length; i++){
+    if(!input[i]['parentId']){
+      arrTree.push(input[i]);
+    }else{
+      for(var j = 0 ; j < )
+    }
+   }
+   return arrTree;
+}
+/*********************Q4******************/
+/*
+动态规划
+*/
