@@ -1,0 +1,82 @@
+<script type="text/javascript">
+var test = [
+{id: 1},
+{id: 2, before: 1},
+{id: 3, after:1},
+{id: 5, first: true},
+{id: 6, last: true},
+{id: 7, after: 8},
+{id: 8},
+{id: 9},
+];
+/*
+1. 将所有普通元素(不含before/after/first/last)的对象组成一个数组a
+2. 遍历特殊元素(before/after)，在数组a中找到相应的位置则插入该对象，否则报错
+3. 若含有header/after，将其置于a的首位
+4. 返回a
+*/
+function hasSpecialPro(obj){
+  return (obj['before'] || obj['after']);
+}
+function solution(input) {
+  var arrResult = [];
+  var arrSpecial = [];
+  var header = '';
+  var tailer = '';
+
+  for(var i = 0; i < input.length; i++){
+    if(hasSpecialPro(input[i])){
+      arrSpecial.push(input[i]);
+    }else{
+      if(input[i]['first']){
+        header = input[i]
+      } else if(input[i]['last']){
+        tailer = input[i];
+      }else{        
+        arrResult.push(input[i])
+      }
+    }
+  }
+
+  for(var i = 0; i < arrSpecial.length; i++){
+    var aimEle;
+    if(arrSpecial[i]['before']){
+      aimEle = arrSpecial[i]['before'];
+    }else{
+      aimEle = arrSpecial[i]['after'];
+    }
+
+    var aimIndex = 0;
+    for(; aimIndex < arrResult.length; aimIndex++){
+      if(arrResult[aimIndex].id === aimEle){
+        break;
+      }
+    }
+
+    if(aimIndex === arrResult.length){
+      console.log("ERROR:");
+      console.log(arrSpecial[i]);
+      break;
+    }
+    else {
+      if(arrSpecial[i]['before']){
+        arrResult.splice(aimIndex, 0, arrSpecial[i]);
+      }else{
+        arrResult.splice(aimIndex + 1, 0, arrSpecial[i]);
+      }
+    }
+  }
+
+  if(header){
+    arrResult.splice(0, 0, header);
+  }
+
+  if(tailer){
+    arrResult.push(tailer);
+  }
+
+  return arrResult;
+}
+console.log(solution(test))
+</script>
+<body></body>
