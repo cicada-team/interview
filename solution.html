@@ -1,0 +1,137 @@
+```javascript
+/**********************Q1********************/
+/*
+将输入解析成数组arrCompetition, 格式为[(x, y, status)...]
+其中x和y为球队名，status为比赛结果
+
+建立球队对象teamObj, 格式为{球队名，比赛得分(初始均为0)}, 即
+{
+  teamA: score,
+  teamB: score,
+  ...
+}
+
+遍历arrCompetition:
+switch(status){
+  case 0:
+    // A胜B负
+    teamObj.teamA += 3
+    break;
+  case 1:
+    // 平
+    teamObj.teamA++;
+    teamObj.teamB++;
+  case 2:
+    // A负B胜
+    teamObj.teamB +=3
+}
+解析teamObj，根据得分排序
+*/
+/**********************Q2********************/
+var test = [
+{id: 1},
+{id: 2, before: 1},
+{id: 3, after:1},
+{id: 5, first: true},
+{id: 6, last: true},
+{id: 7, after: 8},
+{id: 8},
+{id: 9},
+];
+/*
+1. 将所有普通元素(不含before/after/first/last)的对象组成一个数组a
+2. 遍历特殊元素(before/after)，在数组a中找到相应的位置则插入该对象，否则报错
+3. 若含有header/after，将其置于a的首位
+4. 返回a
+*/
+function hasSpecialPro(obj){
+  return (obj['before'] || obj['after']);
+}
+function orderLinkList(input) {
+  var arrResult = [];
+  var arrSpecial = [];
+  var header = '';
+  var tailer = '';
+
+  for(var i = 0; i < input.length; i++){
+    if(hasSpecialPro(input[i])){
+      arrSpecial.push(input[i]);
+    }else{
+      if(input[i]['first']){
+        header = input[i]
+      } else if(input[i]['last']){
+        tailer = input[i];
+      }else{        
+        arrResult.push(input[i])
+      }
+    }
+  }
+
+  for(var i = 0; i < arrSpecial.length; i++){
+    var aimEle;
+    if(arrSpecial[i]['before']){
+      aimEle = arrSpecial[i]['before'];
+    }else{
+      aimEle = arrSpecial[i]['after'];
+    }
+
+    var aimIndex = 0;
+    for(; aimIndex < arrResult.length; aimIndex++){
+      if(arrResult[aimIndex].id === aimEle){
+        break;
+      }
+    }
+
+    if(aimIndex === arrResult.length){
+      console.log("ERROR:");
+      console.log(arrSpecial[i]);
+      break;
+    }
+    else {
+      if(arrSpecial[i]['before']){
+        arrResult.splice(aimIndex, 0, arrSpecial[i]);
+      }else{
+        arrResult.splice(aimIndex + 1, 0, arrSpecial[i]);
+      }
+    }
+  }
+
+  if(header){
+    arrResult.splice(0, 0, header);
+  }
+
+  if(tailer){
+    arrResult.push(tailer);
+  }
+
+  return arrResult;
+}
+console.log(orderLinkList(test))
+
+/*********************Q3******************/
+function createTree(input){
+/*
+1. 遍历数组中的对象，若该对象无属性parentId，则认为该对象是root
+2. 新建组数arrTree和arrRemian
+3. 若对象有属性parentId，遍历arrTree，找到父元素则指定关系
+  3.1 若暂时无法找到指定父元素，遍历arrRemain，在arrReamin中找到指定元素则指定关系
+  3.2 若arrRemain中也不存在，将该节点置于arrRemain作为一个单独的元素  
+4. 合并arrRemain和arrTree，若无法将arrRemain中的全部元素合并置arrTree，则报错
+*/
+  var arrTree = [];
+  var arrRemain = [];
+   for(var i = 0 ; i < input.length; i++){
+    if(!input[i]['parentId']){
+      arrTree.push(input[i]);
+    }else{
+      for(var j = 0 ; j < )
+    }
+   }
+   return arrTree;
+}
+/*********************Q4******************/
+/*
+动态规划
+*/
+                           
+```
