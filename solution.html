@@ -1,4 +1,32 @@
 ```javascript
+/**********************Q1********************/
+/*
+将输入解析成数组arrCompetition, 格式为[(x, y, status)...]
+其中x和y为球队名，status为比赛结果
+
+建立球队对象teamObj, 格式为{球队名，比赛得分(初始均为0)}, 即
+{
+  teamA: score,
+  teamB: score,
+  ...
+}
+
+遍历arrCompetition:
+switch(status){
+  case 0:
+    // A胜B负
+    teamObj.teamA += 3
+    break;
+  case 1:
+    // 平
+    teamObj.teamA++;
+    teamObj.teamB++;
+  case 2:
+    // A负B胜
+    teamObj.teamB +=3
+}
+解析teamObj，根据得分排序
+*/
 /**********************Q2********************/
 var test = [
 {id: 1},
