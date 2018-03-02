@@ -20,7 +20,7 @@ function getPoint (res){
 
 function reverseResult (str){
     let result
-    switch (res) {
+    switch (str) {
         case 'win':
             result = 'loss';
             break;
@@ -44,26 +44,31 @@ function input (str){
     if (3 !== arr.length) {
         return false
     }
-    let point = getPoint(arr[2])
+    let result = arr[2]
+    let point = getPoint(result)
+    let team = arr[0]
 
-    if (historyData[arr[0]] && point !== -1) {
-        historyData[arr[0]][arr[2]]++
-        historyData[arr[0]]['total'] += point
+    if (historyData[team] && point !== -1) {
+        !historyData[team][result] ? (historyData[team][result] = 1) : historyData[team][result]++
+        historyData[team]['total'] += point
     }
     else {
-        historyData[arr[0]] = {}
-        historyData[arr[0]][arr[2]] = 1
-        historyData[arr[0]]['total'] = point
+        historyData[team] = {}
+        historyData[team][result] = 1
+        historyData[team]['total'] = point
     }
 
-    if (historyData[arr[1]] && point !== -1) {
-        historyData[arr[1]][arr[2]]++
-        historyData[arr[1]]['total'] += point
+    result = reverseResult(result)
+    point = getPoint(result)
+    team = arr[1]
+    if (historyData[team] && point !== -1) {
+        !historyData[team][result] ? (historyData[team][result] = 1) : historyData[team][result]++
+        historyData[team]['total'] += point
     }
     else {
-        historyData[arr[1]] = {}
-        historyData[arr[1]][reverseResult(arr[2])] = 1
-        historyData[arr[1]]['total'] = point
+        historyData[team] = {}
+        historyData[team][result] = 1
+        historyData[team]['total'] = point
     }
 
     console.log(historyData)
