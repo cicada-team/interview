@@ -110,10 +110,18 @@ function order (arr){
     })
     // 这段地方有问题，我在调试，但时间到了，因为如果添加了新元素，res数组就会变化，直接遍历有问题，需要映射一张表记录index
     specialObj.forEach((obj) => {
+        // put skip tag here,
+        // skip those rounds when we insert a new element before current element in loop
+		let skip = false
         if (obj.before) {
             res.forEach((el, index) => {
-                if (el.id === obj.before) {
+                if (skip === false && el.id === obj.before) {
                     res.splice(index, 0, obj)
+					skip = true
+                }
+				else {
+                    // reset skip.
+					skip = false
                 }
             })
         }
