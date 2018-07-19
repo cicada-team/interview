@@ -34,9 +34,11 @@ function sort(arr) {
     if (typeof cur.before === 'number') {
       remove(arr, i);
       const pos = insertBefore(arr, cur.before, cur);
+      if (pos > i) i--;
     } else if (typeof cur.after === 'number') {
       remove(arr, i);
       const pos = insertAfter(arr, cur.after, cur);
+      if (pos > i) i--;
     } else if (cur.first) {
       remove(arr, i);
       arr.splice(0, 0, cur);
