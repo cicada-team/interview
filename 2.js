@@ -12,11 +12,13 @@ const input = [
 function insertBefore(arr, i, e) {
   const pos = arr.findIndex(a => a.id === i);
   arr.splice(pos, 0, e);
+  return pos;
 }
 
 function insertAfter(arr, i, e) {
   const pos = arr.findIndex(a => a.id === i);
   arr.splice(pos+1, 0, e);
+  return pos;
 }
 
 function remove(arr, i) {
@@ -26,20 +28,22 @@ function remove(arr, i) {
 function sort(arr) {
   if (arr.length <= 0) return arr;
 
+  const newArr = [];
   for (let i = 0; i < arr.length; i++) {
     const cur = arr[i];
     if (typeof cur.before === 'number') {
       remove(arr, i);
-      insertBefore(arr, cur.before, cur);
+      const pos = insertBefore(arr, cur.before, cur);
     } else if (typeof cur.after === 'number') {
       remove(arr, i);
-      insertAfter(arr, cur.after, cur);
+      const pos = insertAfter(arr, cur.after, cur);
     } else if (cur.first) {
+      remove(arr, i);
       arr.splice(0, 0, cur);
-      remove(arr, i);
     } else if (cur.last) {
-      arr.splice(arr.length+1, 0, cur);
       remove(arr, i);
+      arr.splice(arr.length+1, 0, cur);
+      if (i !== arr.length - 1) i--;
     }
   }
   return arr;
