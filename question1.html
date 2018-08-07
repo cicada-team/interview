@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>question1</title>
+    <script>
+        function addNumber (arrItem) {
+            return !arrItem? 1: ++arrItem;
+        }
+        function compare(property, property2){
+            return function(a,b){
+                let value1 = a[property];
+                let value2 = b[property];
+                if(value1 == value2) {
+                    let v1 = a[property2];
+                    let v2 = a[property2];
+                    if(v1>v2) return 1;
+                    else return -1;
+                }
+                return value2 - value1;
+            }
+        }
+        function getResult () {
+            let input = document.getElementById('input').value;
+            let temp = input.split(/[\n,]/g);
+            let win = [];
+            let lose = [];
+            let drawn = [];
+            let arrayTeam = [];
+            let score = [];
+            for(let i = 0; i < temp.length; i++) {
+                let line = temp[i];
+                let itemContent = line.split(';');
+                if(itemContent && itemContent.length == 3 &&
+                itemContent[0].length > 0 &&
+                itemContent[1].length > 0 &&
+                itemContent[2].length > 0) {
+                console.log(itemContent);
+                    
+                    if(!arrayTeam[itemContent[0]]) {
+                        arrayTeam[itemContent[0]] = 1;
+                    }
+                    if(!arrayTeam[itemContent[1]]) {
+                        arrayTeam[itemContent[1]] = 1;
+                    }
+                    if(itemContent[2] == 'win') {
+                        console.log(itemContent[0])
+                        win[itemContent[0]] = addNumber(win[itemContent[0]]);
+                        console.log(win[itemContent[0]])
+                        lose[itemContent[1]] = addNumber(lose[itemContent[1]]);
+                    } else if(itemContent[2] == 'draw') {
+                        drawn[itemContent[0]] = addNumber(drawn[itemContent[0]]);
+                        drawn[itemContent[1]] = addNumber(drawn[itemContent[1]]);
+                    } else if(itemContent[2] == 'loss') {
+                        lose[itemContent[0]] = addNumber(lose[itemContent[0]]);
+                        win[itemContent[1]] = addNumber(win[itemContent[1]]);
+                    }
+                }
+            }
+            for (let team in arrayTeam) {
+                let mTeam = {
+                    name: '',
+                    value: 0,
+                    num: 0,
+                    w:0,
+                    d:0,
+                    l:0
+                }
+                if(win[team]) {
+                    mTeam.value +=3 * win[team];
+                    mTeam.num += win[team];
+                    mTeam.w += win[team];
+                }
+                if(drawn[team]) {
+                    mTeam.value +=1 * drawn[team];
+                    mTeam.num += drawn[team];
+                    mTeam.d += drawn[team];
+                }
+                if(lose[team]) {
+                    mTeam.num += lose[team];
+                    mTeam.l += lose[team];
+                }
+                mTeam.name = team;
+                score.push(mTeam);
+            }
+            score.sort(compare('value', 'name'))
+            console.log('team|wp|w|d|l|p');
+            for(let i in score) {
+                console.log(score[i].name+'|'+score[i].num+
+                '|'+score[i].w+
+                '|'+score[i].d+
+                '|'+score[i].l+
+                '|'+score[i].value)
+            }
+        }
+    
+    </script>
+</head>
+<body>
+    <div style="display: flex;flex-direction: column">
+        <textarea rows="15" id="input"></textarea>
+        <button onclick="getResult()">getanswer</button>
+    </div>
+</body>
+</html>
